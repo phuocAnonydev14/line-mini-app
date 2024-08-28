@@ -30,7 +30,9 @@ export default function Home() {
         console.log(liff.getAccessToken());
         console.log(liff.getOS()); // Available
         console.log(liff.getAppLanguage()); // Available
+
         !liff.isLoggedIn() && liff.login(); // Not available
+        liff.isLoggedIn() && liff.logout();
       });
   }, []);
   return (
