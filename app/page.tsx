@@ -26,11 +26,11 @@ export default function Home() {
           .then(() => {
             console.log("LIFF init succeeded.");
             setLiffObject(liff);
-            console.log(liff.isLoggedIn());
+            console.log(liff);
 
             console.log(liff.getOS()); // Available
             console.log(liff.getAppLanguage()); // Available
-            liff.login(); // Not available
+            liff.isLoggedIn() && liff.login(); // Not available
           })
           .catch((error: Error) => {
             console.log("LIFF init failed.");
