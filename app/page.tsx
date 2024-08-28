@@ -25,13 +25,16 @@ export default function Home() {
 
         console.log("LIFF init succeeded.");
         setLiffObject(liff);
-        console.log(await liff.getProfile());
-        console.log(liff.getDecodedIDToken());
-        console.log(liff.getAccessToken());
+
         console.log(liff.getOS()); // Available
         console.log(liff.getAppLanguage()); // Available
         !liff.isLoggedIn() && liff.login(); // Not available
-        liff.isLoggedIn() && liff.logout();
+        if (liff.isLoggedIn()) {
+          console.log(await liff.getProfile());
+          console.log(liff.getDecodedIDToken());
+          console.log(liff.getAccessToken());
+          liff.logout();
+        }
       });
   }, []);
   return (
