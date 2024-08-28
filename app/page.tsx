@@ -50,7 +50,16 @@ export default function Home() {
       {user ? (
         <div>
           User: <strong>{user.displayName}</strong> ({user.userId})
-          <Button onClick={() => liffObject?.logout()}>Log out</Button>
+          <div>
+            <Button
+              onClick={() => {
+                liffObject?.logout();
+                window.location.reload();
+              }}
+            >
+              Log out
+            </Button>
+          </div>
         </div>
       ) : (
         <Button onClick={() => liffObject?.login()}>Login</Button>
