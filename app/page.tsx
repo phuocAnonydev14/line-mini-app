@@ -1,6 +1,41 @@
+"use client";
+
+import { Liff } from "@line/liff";
+import GetAppLanguageModule from "@line/liff/get-app-language";
+import GetOSModule from "@line/liff/get-os";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [liffObject, setLiffObject] = useState<Liff | null>(null);
+  const [liffError, setLiffError] = useState<string | null>(null);
+
+  // Execute liff.init() when the app is initialized
+  useEffect(() => {
+    // to avoid `window is not defined` error
+    import("@line/liff")
+      .then((liff) => liff.default)
+      .then((liff) => {
+        console.log("LIFF init...");
+        liff.use(new GetOSModule());
+        liff.use(new GetAppLanguageModule());
+        liff
+          .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! })
+          .then(() => {
+            console.log("LIFF init succeeded.");
+            setLiffObject(liff);
+            console.log(liff.isLoggedIn());
+
+            console.log(liff.getOS()); // Available
+            console.log(liff.getAppLanguage()); // Available
+            liff.login(); // Not available
+          })
+          .catch((error: Error) => {
+            console.log("LIFF init failed.");
+            setLiffError(error.toString());
+          });
+      });
+  }, []);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
