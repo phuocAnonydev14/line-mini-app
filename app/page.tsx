@@ -15,27 +15,22 @@ export default function Home() {
     // to avoid `window is not defined` error
     import("@line/liff")
       .then((liff) => liff.default)
-      .then((liff) => {
+      .then(async (liff) => {
         console.log("LIFF init...");
         liff.use(new GetOSModule());
         liff.use(new GetAppLanguageModule());
-        liff
-          .init({
-            liffId: process.env.NEXT_PUBLIC_LIFF_ID || "2006161319-nPjXbVw8",
-          })
-          .then(() => {
-            console.log("LIFF init succeeded.");
-            setLiffObject(liff);
-            console.log(liff);
+        await liff.init({
+          liffId: process.env.NEXT_PUBLIC_LIFF_ID || "2006161319-nPjXbVw8",
+        });
 
-            console.log(liff.getOS()); // Available
-            console.log(liff.getAppLanguage()); // Available
-            !liff.isLoggedIn() && liff.login(); // Not available
-          })
-          .catch((error: Error) => {
-            console.log("LIFF init failed.");
-            setLiffError(error.toString());
-          });
+        console.log("LIFF init succeeded.");
+        setLiffObject(liff);
+        console.log(await liff.getProfile());
+        console.log(liff.getDecodedIDToken());
+        console.log(liff.getAccessToken());
+        console.log(liff.getOS()); // Available
+        console.log(liff.getAppLanguage()); // Available
+        !liff.isLoggedIn() && liff.login(); // Not available
       });
   }, []);
   return (
