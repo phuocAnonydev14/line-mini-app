@@ -31,7 +31,7 @@ export default function Home() {
 
         console.log("LIFF init succeeded.");
         setLiffObject(liff);
-        console.log(liff.getOS()); // Available
+        console.log(); // Available
         console.log(liff.getAppLanguage()); // Available
         if (liff.isLoggedIn()) {
           const currentUser = await liff.getProfile();
@@ -46,19 +46,22 @@ export default function Home() {
       });
   }, []);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between">
       {user ? (
-        <div>
-          User: <strong>{user.displayName}</strong> ({user.userId})
+        <div className="w-full">
+          User: <strong>{user.displayName}</strong>
+          <div>id: {user.userId}</div>
           <div>
-            <Button
-              onClick={() => {
-                liffObject?.logout();
-                window.location.reload();
-              }}
-            >
-              Log out
-            </Button>
+            {liffObject?.getOS() === "web" && (
+              <Button
+                onClick={() => {
+                  liffObject?.logout();
+                  window.location.reload();
+                }}
+              >
+                Log out
+              </Button>
+            )}
           </div>
         </div>
       ) : (
