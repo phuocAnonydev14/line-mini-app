@@ -20,7 +20,9 @@ export default function Home() {
         liff.use(new GetOSModule());
         liff.use(new GetAppLanguageModule());
         liff
-          .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! })
+          .init({
+            liffId: process.env.NEXT_PUBLIC_LIFF_ID || "2006161319-nPjXbVw8",
+          })
           .then(() => {
             console.log("LIFF init succeeded.");
             setLiffObject(liff);
