@@ -30,7 +30,7 @@ export default function Home() {
 
             console.log(liff.getOS()); // Available
             console.log(liff.getAppLanguage()); // Available
-            liff.isLoggedIn() && liff.login(); // Not available
+            !liff.isLoggedIn() && liff.login(); // Not available
           })
           .catch((error: Error) => {
             console.log("LIFF init failed.");
